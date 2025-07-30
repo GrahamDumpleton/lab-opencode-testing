@@ -1,0 +1,75 @@
+apiVersion: training.educates.dev/v1beta1
+kind: Workshop
+metadata:
+  name: "lab-opencode-testing"
+spec:
+  title: "OpenCode Testing Lab"
+  description: "Test of AI programming with OpenCode."
+  publish:
+    image: "$(image_repository)/lab-opencode-testing-files:$(workshop_version)"
+  workshop:
+    files:
+    - image:
+        url: "$(image_repository)/lab-opencode-testing-files:$(workshop_version)"
+      includePaths:
+      - /workshop/**
+      - /exercises/**
+      - /README.md
+  session:
+    namespaces:
+      budget: medium
+    applications:
+      terminal:
+        enabled: true
+        layout: split
+      editor:
+        enabled: true
+      console:
+        enabled: false
+      docker:
+        enabled: false
+      registry:
+        enabled: false
+      vcluster:
+        enabled: false
+    ingresses:
+    - name: helloworld
+      port: 8080
+    env:
+      - name: OPENAPI_BASE_URL
+        valueFrom:
+          secretKeyRef:
+            key: proxy-url
+            name: $(session_name)-litellm
+      - name: OPENAPI_API_KEY
+        valueFrom:
+          secretKeyRef:
+            key: api-key
+            name: $(session_name)-litellm
+    objects:
+    - apiVersion: litellm.educates.dev/v1alpha1
+      kind: LiteLLMUserSession
+      metadata:
+        name: $(session_name)
+        namespace: $(workshop_namespace)
+      spec:
+        proxy:
+          secretRef:
+            name: $(environment_name)-litellm
+            namespace: educates-litellm
+        session:
+          maxBudget: 0.20 # USD
+  environment:
+    objects:
+    - apiVersion: litellm.educates.dev/v1alpha1
+      kind: LiteLLMUserSession
+      metadata:
+        name: $(environment_name)
+        namespace: educates-litellm
+      spec:
+        proxy:
+          secretRef:
+            name: litellm-masterkey
+            namespace: educates-litellm
+        session:
+          userRole: proxy_admin
