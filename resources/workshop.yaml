@@ -18,6 +18,9 @@ spec:
   session:
     namespaces:
       budget: medium
+      security:
+        token:
+          enabled: false
     applications:
       terminal:
         enabled: true
@@ -36,12 +39,17 @@ spec:
     - name: helloworld
       port: 8080
     env:
-      - name: OPENAPI_BASE_URL
+      - name: LITELLM_MODEL_NAME
+        valueFrom:
+          secretKeyRef:
+            key: model-name
+            name: $(session_name)-model
+      - name: LITELLM_BASE_URL
         valueFrom:
           secretKeyRef:
             key: proxy-url
             name: $(session_name)-litellm
-      - name: OPENAPI_API_KEY
+      - name: LITELLM_API_KEY
         valueFrom:
           secretKeyRef:
             key: api-key
@@ -58,7 +66,7 @@ spec:
             name: $(environment_name)-litellm
             namespace: educates-litellm
         session:
-          maxBudget: 0.20 # USD
+          maxBudget: 0.50 # USD
   environment:
     objects:
     - apiVersion: litellm.educates.dev/v1alpha1
@@ -73,3 +81,16 @@ spec:
             namespace: educates-litellm
         session:
           userRole: proxy_admin
+  request:
+    parameters:
+    - name: LITELLM_MODEL_NAME
+      value: "openrouter/qwen/qwen3-coder:free"
+    objects:
+    - apiVersion: v1
+      kind: Secret
+      metadata:
+        name: $(session_name)-model
+        namespace: $(workshop_namespace)
+      type: Opaque
+      stringData:
+        model-name: "$(LITELLM_MODEL_NAME)"

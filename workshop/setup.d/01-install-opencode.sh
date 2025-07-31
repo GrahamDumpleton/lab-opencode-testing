@@ -4,6 +4,7 @@
 
 cat > $HOME/.bashrc <<EOF
 PATH=$HOME/opencode/bin:\$PATH
+unset XDG_CONFIG_HOME
 EOF
 
 if [ ! -f $HOME/.opencode/bin/opencode ]; then
@@ -13,29 +14,23 @@ else
   exit 0
 fi
 
-curl -fsSL https://opencode.ai/install | bash
-
 mkdir -p $HOME/.config/opencode
 
 cat > $HOME/.config/opencode/config.json <<'EOF'
 {
   "$schema": "https://opencode.ai/config.json",
-  "model": "openrouter/qwen/qwen3-coder:free",
+  "model": "{env:LITELLM_MODEL_NAME}",
   "provider": {
-    "custom": {
+    "litellm": {
       "npm": "@ai-sdk/openai-compatible",
       "options": {
-        "apiKey": "{env:OPENAPI_API_KEY}",
-        "baseURL": "{env:OPENAPI_BASE_URL}"
+        "apiKey": "{env:LITELLM_API_KEY}",
+        "baseURL": "{env:LITELLM_BASE_URL}"
       },
       "models": {
-              "openrouter/qwen/qwen3-coder:free": {}
+        "{env:LITELLM_MODEL_NAME}": {}
       }
     }
   }
 }
-EOF
-
-cat >> $HOME/.bashrc <<EOF
-unset XDG_CONFIG_HOME
 EOF
