@@ -4,23 +4,11 @@ title: Updating Rules
 
 The application should now be working with the improved Bootstrap styling and Jinja2 templates. If it's not working properly, you should try iterating by providing more prompts to OpenCode, see if you can fix any issues by looking at the code and asking for specific corrections.
 
-However, there's an important next step: we need to ensure that the agent still knows about our new infrastructure that we're using. We want to update the agent rules in the AGENTS.md file (our steering agent documentation) to include information about how we're now using Jinja2 and Bootstrap as part of our infrastructure stack, so that it keeps using these technologies in future changes.
+However, there's an important next step: we need to ensure that the agent still knows about our new infrastructure that we're using. It's not guaranteed that the agent will automatically update its own steering documentation when making code changes, so we need to explicitly ask it to do this. We want to update the agent rules in the AGENTS.md file (our steering agent documentation) to include information about how we're now using Jinja2 and Bootstrap as part of our infrastructure stack, so that it keeps using these technologies in future changes.
 
-```editor:execute-command
-prefix: OpenCode
-title: Submit Prompt
-description: |-
-    Update the AGENTS.md file to include that we are now using Jinja2 templates and Bootstrap CSS framework as part of our infrastructure stack
-command: workbench.action.terminal.focus
-cascade: true
-```
-
-```editor:execute-command
-hidden: true
-command: workbench.action.terminal.sendSequence
-args:
-- { "text": "Update the AGENTS.md file to include that we are now using Jinja2 templates and Bootstrap CSS framework as part of our infrastructure stack\u000D" }
-```
+{{< submit-prompt >}}
+Update the AGENTS.md file to include that we are now using Jinja2 templates and Bootstrap CSS framework as part of our infrastructure stack
+{{< /submit-prompt >}}
 
 Once OpenCode has updated the AGENTS.md file, you can review it again to see how the steering documentation now includes information about the new infrastructure components.
 

@@ -3,7 +3,7 @@
 # Install OpenCode
 
 cat > $HOME/.bashrc <<EOF
-PATH=$HOME/opencode/bin:\$PATH
+PATH=$HOME/.opencode/bin:\$PATH
 unset XDG_CONFIG_HOME
 EOF
 

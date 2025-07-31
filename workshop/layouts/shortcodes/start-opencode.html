@@ -1,0 +1,5 @@
+{{- $title := "Start OpenCode" -}}
+{{- $glyph := "fa-play" -}}
+{{- $description := "" -}}
+{{- $markdown := printf "```editor:execute-command\ntitle: %s\ndescription: %s\nglyph: %s\ncommand: workbench.action.tasks.runTask\nargs:\n- OpenCode\n```" $title $description $glyph -}}
+{{ $markdown | .Page.RenderString }}

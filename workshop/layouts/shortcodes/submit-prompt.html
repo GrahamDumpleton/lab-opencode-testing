@@ -1,0 +1,7 @@
+{{- $prompt := .Inner | strings.TrimSpace -}}
+{{- $indentedPrompt := $prompt | replaceRE "\n" "\n    " -}}
+{{- $markdown1 := printf "```editor:execute-command\nprefix: OpenCode\ntitle: Submit Prompt\ndescription: |-\n    %s\ncommand: workbench.action.terminal.focus\ncascade: true\n```" $indentedPrompt -}}
+{{ $markdown1 | .Page.RenderString }}
+
+{{- $markdown2 := printf "```editor:execute-command\nhidden: true\ncommand: workbench.action.terminal.sendSequence\nargs:\n- { \"text\": \"%s\\u000D\" }\n```" $prompt -}}
+{{ $markdown2 | .Page.RenderString }}

@@ -54,19 +54,6 @@ spec:
           secretKeyRef:
             key: api-key
             name: $(session_name)-litellm
-    objects:
-    - apiVersion: litellm.educates.dev/v1alpha1
-      kind: LiteLLMUserSession
-      metadata:
-        name: $(session_name)
-        namespace: $(workshop_namespace)
-      spec:
-        proxy:
-          secretRef:
-            name: $(environment_name)-litellm
-            namespace: educates-litellm
-        session:
-          maxBudget: 0.50 # USD
   environment:
     objects:
     - apiVersion: litellm.educates.dev/v1alpha1
@@ -94,3 +81,15 @@ spec:
       type: Opaque
       stringData:
         model-name: "$(LITELLM_MODEL_NAME)"
+    - apiVersion: litellm.educates.dev/v1alpha1
+      kind: LiteLLMUserSession
+      metadata:
+        name: $(session_name)
+        namespace: $(workshop_namespace)
+      spec:
+        proxy:
+          secretRef:
+            name: $(environment_name)-litellm
+            namespace: educates-litellm
+        session:
+          maxBudget: 0.50 # USD

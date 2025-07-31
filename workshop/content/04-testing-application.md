@@ -6,21 +6,9 @@ Now that we have the agent steering rules in place, we can test the application 
 
 Let's direct OpenCode to run the application again and see the difference.
 
-```editor:execute-command
-prefix: OpenCode
-title: Submit Prompt
-description: |-
-    Run the application in this directory
-command: workbench.action.terminal.focus
-cascade: true
-```
-
-```editor:execute-command
-hidden: true
-command: workbench.action.terminal.sendSequence
-args:
-- { "text": "Run the application in this directory\u000D" }
-```
+{{< submit-prompt >}}
+Run the application in this directory
+{{< /submit-prompt >}}
 
 The Flask application runs and listens on `localhost:8080`, but in this workshop environment we don't have direct access to that from our local browser. Instead, we'll open the application in a new tab within the workshop dashboard, which provides access to the running application through the workshop's ingress router.
 

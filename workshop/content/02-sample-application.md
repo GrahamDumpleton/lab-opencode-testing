@@ -22,27 +22,17 @@ To test that the application is working correctly, you can ask OpenCode to run t
 
 Simply ask OpenCode something like: "Run the application in this directory".
 
-```editor:execute-command
-prefix: OpenCode
-title: Submit Prompt
-description: |-
-    Run the application in this directory
-command: workbench.action.terminal.focus
-cascade: true
-```
-
-```editor:execute-command
-hidden: true
-command: workbench.action.terminal.sendSequence
-args:
-- { "text": "Run the application in this directory\u000D" }
-```
+{{< submit-prompt >}}
+Run the application in this directory
+{{< /submit-prompt >}}
 
 ## What You'll Actually Find
 
-When you first ask OpenCode to run the application, you'll likely find that it struggles to know how to proceed, or it might attempt something completely incorrect. This happens because the project hasn't been properly initialized, and we haven't provided the agent rules that would give OpenCode the guidance it needs.
+When you first ask OpenCode to run the application, you'll likely find that it struggles to know how to proceed, or it might attempt something completely incorrect. 
 
-OpenCode needs proper project configuration and context to understand how to work with your specific application. Without initialization and clear agent rules, it lacks the knowledge of your project structure, dependencies, and execution requirements.
+This confusion often occurs because OpenCode doesn't know which Python environment approach to use - should it use `pip` to create a virtual environment, or should it use `uv` as specified in our project configuration? Without clear guidance about the project's preferred tooling, it may default to approaches that don't match our setup.
+
+The root cause is that the project hasn't been properly initialized, and we haven't provided the agent rules that would give OpenCode the specific guidance it needs about our development environment, project structure, dependencies, and execution requirements.
 
 This demonstrates an important aspect of working with AI coding assistants - they need to be properly configured and given appropriate context to be effective in your development workflow.
 
@@ -50,20 +40,8 @@ This demonstrates an important aspect of working with AI coding assistants - the
 
 However, if OpenCode successfully figures out how to run the application on its own by analyzing the project structure and available files, then you can proceed to test stopping the application. This demonstrates OpenCode's ability to understand project context when sufficient information is available.
 
-```editor:execute-command
-prefix: OpenCode
-title: Submit Prompt
-description: |-
-    Stop the application
-command: workbench.action.terminal.focus
-cascade: true
-```
-
-```editor:execute-command
-hidden: true
-command: workbench.action.terminal.sendSequence
-args:
-- { "text": "Stop the application\u000D" }
-```
+{{< submit-prompt >}}
+Stop the application
+{{< /submit-prompt >}}
 
 The key takeaway is that AI coding assistants perform significantly better when they're provided with proper configuration and clear instructions.

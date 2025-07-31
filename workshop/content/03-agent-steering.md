@@ -6,21 +6,9 @@ AI coding assistants work best when guided by rules or steering documents that p
 
 For OpenCode to analyze your project and create the initial rules or steering documents automatically, you use the `/init` command at the prompt. This command tells OpenCode to examine your codebase and generate appropriate guidance for future interactions.
 
-```editor:execute-command
-prefix: OpenCode
-title: Submit Prompt
-description: |-
-    /init
-command: workbench.action.terminal.focus
-cascade: true
-```
-
-```editor:execute-command
-hidden: true
-command: workbench.action.terminal.sendSequence
-args:
-- { "text": "/init\u000D" }
-```
+{{< submit-prompt >}}
+/init
+{{< /submit-prompt >}}
 
 Once OpenCode has finished analyzing your project and generating the steering documents, you can review what it has created by looking at the AGENTS.md file. This file contains the rules and context that will guide future interactions with the AI assistant.
 

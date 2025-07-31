@@ -1,0 +1,11 @@
+{{- $yamlContent := .Inner | transform.Unmarshal -}}
+{{- $prefix := $yamlContent.prefix | default "Editor" -}}
+{{- $name := $yamlContent.name -}}
+{{- $title := $yamlContent.title | default (printf "%s: Run Task \"%s\"" $prefix $name) -}}
+{{- $glyph := $yamlContent.glyph | default "fa-play" -}}
+{{- $description := $yamlContent.description -}}
+{{- $body := $yamlContent.body -}}
+{{- $cascade := $yamlContent.cascade | default false -}}
+{{- $hidden := $yamlContent.hidden | default false -}}
+{{- $markdown := printf "```editor:execute-command\nprefix: %s\ntitle: %s\ndescription: %s\nglyph: %s\ncascade: %v\nhidden: %v\ncommand: workbench.action.tasks.runTask\nargs:\n- %s\n```" $prefix $title $description $glyph $cascade $hidden $name -}}
+{{ $markdown | .Page.RenderString }}
